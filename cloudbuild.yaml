@@ -2,10 +2,10 @@ steps:
   # build the container image
   - name: "gcr.io/cloud-builders/docker"
     args:
-      ["build", "-t", "gcr.io/api-rest-test-318611/api-rest-test:${SHORT_SHA}", "."]
+      ["build", "-t", "gcr.io/covid-checks/api-covid-checks:${SHORT_SHA}", "."]
     # push the container image to Container Registry
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/api-rest-test-318611/api-rest-test"]
+    args: ["push", "gcr.io/covid-checks/api-covid-checks"]
     # deploy container image to Cloud Run
   - name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -13,9 +13,9 @@ steps:
         "beta",
         "run",
         "deploy",
-        "api-rest-test",
+        "api-covid-checks",
         "--image",
-        "gcr.io/api-rest-test-318611/api-rest-test:${SHORT_SHA}",
+        "gcr.io/covid-checks/api-covid-checks:${SHORT_SHA}",
         "--region",
         "us-central1",
         "--allow-unauthenticated",
@@ -23,4 +23,4 @@ steps:
     env:
       - "PORT=8080"
 images:
-  - gcr.io/api-rest-test-318611/api-rest-test
+  - gcr.io/covid-checks/api-covid-checks
